@@ -1,6 +1,6 @@
 4333
 78C:\Users\MarioGozie\Desktop\Forkify App\node_modules\lines-and-columns\LICENSE133795211728559114 0
-60C:\Users\MarioGozie\Desktop\Forkify App\src\js\controller.js133795278150264047 0
+60C:\Users\MarioGozie\Desktop\Forkify App\src\js\controller.js133795315179859235 0
 66C:\Users\MarioGozie\Desktop\Forkify App\node_modules\semver\ranges133795211937477065 1
 104C:\Users\MarioGozie\Desktop\Forkify App\node_modules\@swc\helpers\src\_class_apply_descriptor_update.mjs133795212069955304 0
 76C:\Users\MarioGozie\Desktop\Forkify App\node_modules\@parcel\rust\index.d.ts133795212123915766 0
@@ -14,7 +14,7 @@
 74C:\Users\MarioGozie\Desktop\Forkify App\node_modules\.bin\browserslist.cmd133795212194749382 0
 110C:\Users\MarioGozie\Desktop\Forkify App\node_modules\posthtml\node_modules\dom-serializer\lib\esm\package.json133795211814916705 0
 82C:\Users\MarioGozie\Desktop\Forkify App\node_modules\domutils\lib\esm\index.js.map133795211896928082 0
-44C:\Users\MarioGozie\Desktop\Forkify App\dist133795278151883036 1
+44C:\Users\MarioGozie\Desktop\Forkify App\dist133795315181251142 1
 107C:\Users\MarioGozie\Desktop\Forkify App\node_modules\react-refresh\cjs\react-refresh-runtime.development.js133795211803987194 0
 71C:\Users\MarioGozie\Desktop\Forkify App\node_modules\@swc\types\LICENSE133795211729348147 0
 89C:\Users\MarioGozie\Desktop\Forkify App\node_modules\msgpackr\dist\unpack-no-eval.cjs.map133795211953164529 0
@@ -579,7 +579,7 @@
 74C:\Users\MarioGozie\Desktop\Forkify App\node_modules\sass\types\index.d.ts133795213229138586 0
 78C:\Users\MarioGozie\Desktop\Forkify App\node_modules\@parcel\core\package.json133795212046537681 0
 106C:\Users\MarioGozie\Desktop\Forkify App\node_modules\@parcel\transformer-postcss\lib\PostCSSTransformer.js133795211831034082 0
-63C:\Users\MarioGozie\Desktop\Forkify App\dist\index.f7626f62.css133795275794330216 0
+63C:\Users\MarioGozie\Desktop\Forkify App\dist\index.f7626f62.css133795313089983415 0
 93C:\Users\MarioGozie\Desktop\Forkify App\node_modules\utility-types\dist\aliases-and-guards.js133795211745785878 0
 88C:\Users\MarioGozie\Desktop\Forkify App\node_modules\@parcel\runtime-js\src\helpers\node133795211916619936 1
 105C:\Users\MarioGozie\Desktop\Forkify App\node_modules\@parcel\runtime-js\src\helpers\browser\css-loader.js133795211847742212 0
@@ -587,7 +587,7 @@
 79C:\Users\MarioGozie\Desktop\Forkify App\node_modules\@parcel\core\test\requests133795211956317650 1
 74C:\Users\MarioGozie\Desktop\Forkify App\node_modules\js-yaml\lib\dumper.js133795211828628858 0
 103C:\Users\MarioGozie\Desktop\Forkify App\node_modules\posthtml\node_modules\posthtml-parser\package.json133795211791347821 0
-67C:\Users\MarioGozie\Desktop\Forkify App\dist\index.f7626f62.css.map133795275795117615 0
+67C:\Users\MarioGozie\Desktop\Forkify App\dist\index.f7626f62.css.map133795313090507870 0
 97C:\Users\MarioGozie\Desktop\Forkify App\node_modules\utility-types\dist\aliases-and-guards.js.map133795211820512441 0
 94C:\Users\MarioGozie\Desktop\Forkify App\node_modules\@parcel\namer-default\lib\DefaultNamer.js133795211746212480 0
 76C:\Users\MarioGozie\Desktop\Forkify App\node_modules\msgpackr\test-worker.js133795211882837337 0
@@ -2040,7 +2040,7 @@
 75C:\Users\MarioGozie\Desktop\Forkify App\node_modules\entities\lib\generated133795211963148077 1
 71C:\Users\MarioGozie\Desktop\Forkify App\node_modules\js-tokens\index.js133795211758503436 0
 80C:\Users\MarioGozie\Desktop\Forkify App\node_modules\@swc\helpers\_\_ts_decorate133795212063875667 1
-55C:\Users\MarioGozie\Desktop\Forkify App\dist\index.html133795275794330216 0
+55C:\Users\MarioGozie\Desktop\Forkify App\dist\index.html133795313089983415 0
 70C:\Users\MarioGozie\Desktop\Forkify App\node_modules\js-tokens\LICENSE133795211765150320 0
 75C:\Users\MarioGozie\Desktop\Forkify App\node_modules\js-tokens\package.json133795211728609097 0
 72C:\Users\MarioGozie\Desktop\Forkify App\node_modules\js-tokens\README.md133795211790588279 0
@@ -2771,7 +2771,7 @@
 84C:\Users\MarioGozie\Desktop\Forkify App\node_modules\caniuse-lite\data\regions\TG.js133795212180205769 0
 84C:\Users\MarioGozie\Desktop\Forkify App\node_modules\caniuse-lite\data\regions\TH.js133795212180361297 0
 100C:\Users\MarioGozie\Desktop\Forkify App\node_modules\@parcel\watcher\src\watchman\WatchmanBackend.hh133795211909859958 0
-68C:\Users\MarioGozie\Desktop\Forkify App\dist\Forkify App.3464ddca.js133795275794330216 0
+68C:\Users\MarioGozie\Desktop\Forkify App\dist\Forkify App.3464ddca.js133795313089983415 0
 96C:\Users\MarioGozie\Desktop\Forkify App\node_modules\caniuse-lite\data\features\console-basic.js133795212021695761 0
 84C:\Users\MarioGozie\Desktop\Forkify App\node_modules\caniuse-lite\data\regions\TJ.js133795212180481249 0
 80C:\Users\MarioGozie\Desktop\Forkify App\node_modules\@parcel\transformer-svg\src133795211828698801 1
@@ -4167,7 +4167,7 @@
 143C:\Users\MarioGozie\Desktop\Forkify App\node_modules\@parcel\core\test\fixtures\plugins\node_modules\parcel-transformer-no-engines\package.json133795212050005612 0
 74C:\Users\MarioGozie\Desktop\Forkify App\node_modules\@parcel\codeframe\src133795211888148466 1
 144C:\Users\MarioGozie\Desktop\Forkify App\node_modules\@parcel\core\test\fixtures\plugins\node_modules\parcel-transformer-bad-engines\package.json133795212050005612 0
-66C:\Users\MarioGozie\Desktop\Forkify App\dist\index.62406edb.js.map133795278151695470 0
+66C:\Users\MarioGozie\Desktop\Forkify App\dist\index.62406edb.js.map133795315181211943 0
 96C:\Users\MarioGozie\Desktop\Forkify App\node_modules\@parcel\core\test\fixtures\parcel\yarn.lock133795212050171705 0
 114C:\Users\MarioGozie\Desktop\Forkify App\node_modules\@parcel\core\test\fixtures\invalid-target-source-not-file\src133795211982867680 1
 123C:\Users\MarioGozie\Desktop\Forkify App\node_modules\@parcel\core\test\fixtures\invalid-target-source-not-file\src\index.js133795211982887667 0
@@ -4327,8 +4327,8 @@
 68C:\Users\MarioGozie\Desktop\Forkify App\node_modules\.bin\semver.ps1133795212194794387 0
 80C:\Users\MarioGozie\Desktop\Forkify App\node_modules\.bin\update-browserslist-db133795212195031346 0
 84C:\Users\MarioGozie\Desktop\Forkify App\node_modules\.bin\update-browserslist-db.cmd133795212194804422 0
-65C:\Users\MarioGozie\Desktop\Forkify App\dist\favicon.8b2f57bf.png133795275794330216 0
-72C:\Users\MarioGozie\Desktop\Forkify App\dist\Forkify App.3464ddca.js.map133795275795102517 0
-63C:\Users\MarioGozie\Desktop\Forkify App\dist\icons.21bad73c.svg133795275794330216 0
-62C:\Users\MarioGozie\Desktop\Forkify App\dist\index.62406edb.js133795278151695470 0
-62C:\Users\MarioGozie\Desktop\Forkify App\dist\logo.726d37a8.png133795275794340201 0
+65C:\Users\MarioGozie\Desktop\Forkify App\dist\favicon.8b2f57bf.png133795313089735728 0
+72C:\Users\MarioGozie\Desktop\Forkify App\dist\Forkify App.3464ddca.js.map133795313090507870 0
+63C:\Users\MarioGozie\Desktop\Forkify App\dist\icons.21bad73c.svg133795313089983415 0
+62C:\Users\MarioGozie\Desktop\Forkify App\dist\index.62406edb.js133795315181080738 0
+62C:\Users\MarioGozie\Desktop\Forkify App\dist\logo.726d37a8.png133795313089973320 0
