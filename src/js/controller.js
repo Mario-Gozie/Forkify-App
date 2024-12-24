@@ -1,5 +1,6 @@
 import icons from "../img/icons.svg";
-console.log(icons);
+import "core-js/stable"; // for polyfilling everything else.
+import "regenreator-runtime/runtime"; // for polyfilling async Await
 
 const recipeContainer = document.querySelector(".recipe");
 
