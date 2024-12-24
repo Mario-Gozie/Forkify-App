@@ -12,7 +12,8 @@ const timeout = function(s) {
 const showRecipe = async function() {
     try {
         // Loading Recipe
-        const res = await fetch("https://forkify-api.jonas.io/api/v2/recipes/664c8f193e7aa067e94e8297");
+        const res = await fetch(// "https://forkify-api.jonas.io/api/v2/recipes/664c8f193e7aa067e94e8297"
+        "https://forkify-api.jonas.io/api/v2/recipes/5ed6604591c37cdc054bc886");
         // TRYING TO CAUSE AN ERROR
         // const res = await fetch(
         //   "https://forkify-api.jonas.io/api/v2/recipes/5ed6604591c37cdc054bc886zzz"
@@ -85,27 +86,18 @@ const showRecipe = async function() {
         <div class="recipe__ingredients">
           <h2 class="heading--2">Recipe ingredients</h2>
           <ul class="recipe__ingredient-list">
-            <li class="recipe__ingredient">
-              <svg class="recipe__icon">
-                <use href="src/img/icons.svg#icon-check"></use>
-              </svg>
-              <div class="recipe__quantity">1000</div>
-              <div class="recipe__description">
-                <span class="recipe__unit">g</span>
-                pasta
-              </div>
-            </li>
-
-            <li class="recipe__ingredient">
-              <svg class="recipe__icon">
-                <use href="src/img/icons.svg#icon-check"></use>
-              </svg>
-              <div class="recipe__quantity">0.5</div>
-              <div class="recipe__description">
-                <span class="recipe__unit">cup</span>
-                ricotta cheese
-              </div>
-            </li>
+          ${recipe.ingredients.map((ing)=>{
+            return `<li class="recipe__ingredient">
+            <svg class="recipe__icon">
+              <use href="src/img/icons.svg#icon-check"></use>
+            </svg>
+            <div class="recipe__quantity">${ing.quantity}</div>
+            <div class="recipe__description">
+              <span class="recipe__unit">${ing.unit}</span>
+              ${ing.description}
+            </div>
+          </li>`;
+        }).join("")}  
           </ul>
         </div>
 
