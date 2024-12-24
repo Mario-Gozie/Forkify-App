@@ -1,6 +1,6 @@
 import icons from "../img/icons.svg";
 import "core-js/stable"; // for polyfilling everything else.
-import "regenreator-runtime/runtime"; // for polyfilling async Await
+import "regenerator-runtime/runtime"; // for polyfilling async Await
 
 const recipeContainer = document.querySelector(".recipe");
 
@@ -29,11 +29,14 @@ const renderSpinner = function (parentEl) {
 
 const showRecipe = async function () {
   try {
-    renderSpinner(recipeContainer);
+    const id = window.location.hash.slice(1);
+    console.log(id);
+
     // Loading Recipe
+    renderSpinner(recipeContainer);
     const res = await fetch(
       // "https://forkify-api.jonas.io/api/v2/recipes/664c8f193e7aa067e94e8297"
-      "https://forkify-api.jonas.io/api/v2/recipes/5ed6604591c37cdc054bc886"
+      `https://forkify-api.jonas.io/api/v2/recipes/${id}`
     );
 
     // TRYING TO CAUSE AN ERROR
@@ -168,3 +171,10 @@ const showRecipe = async function () {
 };
 
 showRecipe();
+
+window.addEventListener("hashchange", showRecipe);
+window.addEventListener("load", showRecipe);
+
+// instead of running these two functions above seperately, we can do use a foreach function and put the different events in an array.
+
+["hashchange", "load"].forEach((ev) => window.addEventListener(ev, showRecipe));
