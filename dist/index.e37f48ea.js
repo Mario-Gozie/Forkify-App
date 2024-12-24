@@ -625,29 +625,9 @@ const showRecipe = async function() {
     try {
         const id = window.location.hash.slice(1);
         console.log(id);
+        if (!id) return;
         // Loading Recipe
         renderSpinner(recipeContainer);
-        const res = await fetch(// "https://forkify-api.jonas.io/api/v2/recipes/664c8f193e7aa067e94e8297"
-        `https://forkify-api.jonas.io/api/v2/recipes/${id}`);
-        // TRYING TO CAUSE AN ERROR
-        // const res = await fetch(
-        //   "https://forkify-api.jonas.io/api/v2/recipes/5ed6604591c37cdc054bc886zzz"
-        // );
-        const data = await res.json();
-        console.log(res, data);
-        if (!res.ok) throw Error(`${data.message} (${res.status})`);
-        let { recipe } = data.data;
-        recipe = {
-            id: recipe.id,
-            title: recipe.title,
-            publisher: recipe.publisher,
-            sourceUrl: recipe.source_url,
-            image: recipe.image_url,
-            servings: recipe.servings,
-            cookingTime: recipe.cooking_time,
-            ingredients: recipe.ingredients
-        };
-        console.log(recipe);
         // Rendering Recipe
         const markup = `
         <figure class="recipe__fig">
@@ -742,8 +722,8 @@ const showRecipe = async function() {
     }
 };
 showRecipe();
-window.addEventListener("hashchange", showRecipe);
-window.addEventListener("load", showRecipe);
+// window.addEventListener("hashchange", showRecipe);
+// window.addEventListener("load", showRecipe);
 // instead of running these two functions above seperately, we can do use a foreach function and put the different events in an array.
 [
     "hashchange",
