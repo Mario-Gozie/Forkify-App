@@ -1,3 +1,5 @@
+import * as model from "./model.js";
+
 import icons from "../img/icons.svg";
 import "core-js/stable"; // for polyfilling everything else.
 import "regenerator-runtime/runtime"; // for polyfilling async Await
@@ -33,10 +35,12 @@ const showRecipe = async function () {
     console.log(id);
 
     if (!id) return;
-
-    // Loading Recipe
     renderSpinner(recipeContainer);
 
+    // Loading Recipe
+    await model.loadRecipe(id); // we didn't put the result of this promise into a variabe because we dont need it. in the model module, it will put it's result into the recipe object. but because we need to handle all promises, that is why we had to use an await here.
+
+    const { recipe } = model.state; //trying to destructure the recipe object of the state object to see it's content.
     // Rendering Recipe
 
     const markup = `
