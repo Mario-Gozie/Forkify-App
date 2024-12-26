@@ -2504,18 +2504,20 @@ try {
 }
 
 },{}],"Y4A21":[function(require,module,exports,__globalThis) {
+// This contains everything that has to do with the business aspect of the webpage.
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "state", ()=>state);
 parcelHelpers.export(exports, "loadRecipe", ()=>loadRecipe);
 var _regeneratorRuntime = require("regenerator-runtime");
+var _config = require("./config");
 const state = {
     recipe: {}
 };
 const loadRecipe = async function(id) {
     try {
-        const res = await fetch(// "https://forkify-api.jonas.io/api/v2/recipes/664c8f193e7aa067e94e8297"
-        `https://forkify-api.jonas.io/api/v2/recipes/${id}`);
+        const res = await fetch(`${(0, _config.API_URL)}/${id}`);
+        // "https://forkify-api.jonas.io/api/v2/recipes/664c8f193e7aa067e94e8297"
         // TRYING TO CAUSE AN ERROR
         // const res = await fetch(
         //   "https://forkify-api.jonas.io/api/v2/recipes/5ed6604591c37cdc054bc886zzz"
@@ -2540,7 +2542,15 @@ const loadRecipe = async function(id) {
     }
 };
 
-},{"regenerator-runtime":"dXNgZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l60JC":[function(require,module,exports,__globalThis) {
+},{"regenerator-runtime":"dXNgZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./config":"k5Hzs"}],"k5Hzs":[function(require,module,exports,__globalThis) {
+// This contains all the variables that are constants needed to be reused throughout this project.
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "API_URL", ()=>API_URL);
+const API_URL = `https://forkify-api.jonas.io/api/v2/recipes`;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l60JC":[function(require,module,exports,__globalThis) {
+// This contains all the things rendered to the webpage
 // Importing Icons
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);

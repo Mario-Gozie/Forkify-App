@@ -1,4 +1,6 @@
+// This contains everything that has to do with the business aspect of the webpage.
 import { async } from "regenerator-runtime";
+import { API_URL } from "./config";
 
 export const state = {
   recipe: {},
@@ -6,10 +8,8 @@ export const state = {
 
 export const loadRecipe = async function (id) {
   try {
-    const res = await fetch(
-      // "https://forkify-api.jonas.io/api/v2/recipes/664c8f193e7aa067e94e8297"
-      `https://forkify-api.jonas.io/api/v2/recipes/${id}`
-    );
+    const res = await fetch(`${API_URL}/${id}`);
+    // "https://forkify-api.jonas.io/api/v2/recipes/664c8f193e7aa067e94e8297"
 
     // TRYING TO CAUSE AN ERROR
 

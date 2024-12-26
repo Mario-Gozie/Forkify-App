@@ -1,3 +1,4 @@
+// This contains all the things rendered to the webpage
 // Importing Icons
 
 import icons from "../../img/icons.svg";
