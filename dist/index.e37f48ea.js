@@ -2511,20 +2511,13 @@ parcelHelpers.export(exports, "state", ()=>state);
 parcelHelpers.export(exports, "loadRecipe", ()=>loadRecipe);
 var _regeneratorRuntime = require("regenerator-runtime");
 var _config = require("./config");
+var _helpers = require("./helpers");
 const state = {
     recipe: {}
 };
 const loadRecipe = async function(id) {
     try {
-        const res = await fetch(`${(0, _config.API_URL)}/${id}`);
-        // "https://forkify-api.jonas.io/api/v2/recipes/664c8f193e7aa067e94e8297"
-        // TRYING TO CAUSE AN ERROR
-        // const res = await fetch(
-        //   "https://forkify-api.jonas.io/api/v2/recipes/5ed6604591c37cdc054bc886zzz"
-        // );
-        const data = await res.json();
-        console.log(res, data);
-        if (!res.ok) throw Error(`${data.message} (${res.status})`);
+        const data = await (0, _helpers.getJSON)(`${(0, _config.API_URL)}/${id}`);
         const { recipe } = data.data;
         state.recipe = {
             id: recipe.id,
@@ -2538,16 +2531,38 @@ const loadRecipe = async function(id) {
         };
         console.log(state.recipe);
     } catch (err) {
-        alert(err);
+        // Temporary error handling
+        console.error(`${err} \u{1F4A5}\u{1F4A5}\u{1F4A5}\u{1F4A5}`);
     }
 };
 
-},{"regenerator-runtime":"dXNgZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./config":"k5Hzs"}],"k5Hzs":[function(require,module,exports,__globalThis) {
+},{"regenerator-runtime":"dXNgZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./config":"k5Hzs","./helpers":"hGI1E"}],"k5Hzs":[function(require,module,exports,__globalThis) {
 // This contains all the variables that are constants needed to be reused throughout this project.
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "API_URL", ()=>API_URL);
 const API_URL = `https://forkify-api.jonas.io/api/v2/recipes`;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hGI1E":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getJSON", ()=>getJSON);
+const getJSON = async function(url) {
+    try {
+        const res = await fetch(url);
+        // "https://forkify-api.jonas.io/api/v2/recipes/664c8f193e7aa067e94e8297"
+        // TRYING TO CAUSE AN ERROR
+        // const res = await fetch(
+        //   "https://forkify-api.jonas.io/api/v2/recipes/5ed6604591c37cdc054bc886zzz"
+        // );
+        const data = await res.json();
+        console.log(res, data);
+        if (!res.ok) throw Error(`${data.message} (${res.status})`);
+        return data;
+    } catch (err) {
+        throw err; // I am throwing this error because I want it to be handled in the model.js and not in helpers.js This is more like propergating an error from one async function to another.
+    }
+};
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l60JC":[function(require,module,exports,__globalThis) {
 // This contains all the things rendered to the webpage
