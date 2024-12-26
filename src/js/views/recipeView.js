@@ -29,6 +29,19 @@ class RecipeView {
     this.#parentElement.insertAdjacentHTML("afterbegin", markup);
   };
 
+  addHandlerRender(handler) {
+    // This function is used for publisher-subscriber relationship where by controller function is passed as an argument then into it. then in the controller module. this function is put into an init functiom and then called. This type of function is not made private so it can be accessible by the controller function in the controller module.
+
+    // window.addEventListener("hashchange", controlRecipes);
+    // window.addEventListener("load", controlRecipes);
+
+    // instead of running these two functions above seperately, we can do use a foreach function and put the different events in an array.
+
+    ["hashchange", "load"].forEach((ev) =>
+      window.addEventListener(ev, handler)
+    );
+  }
+
   #generateMarkup() {
     return `
     <figure class="recipe__fig">
