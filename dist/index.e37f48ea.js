@@ -2564,8 +2564,8 @@ class RecipeView {
               <use href="${(0, _iconsSvgDefault.default)}#icon-loader"></use>
             </svg>
           </div>`;
-        this.parentElement.innerHTML = "";
-        this.parentElement.insertAdjacentHTML("afterbegin", markup);
+        this.#parentElement.innerHTML = "";
+        this.#parentElement.insertAdjacentHTML("afterbegin", markup);
     };
     #generateMarkup() {
         return `
@@ -2644,7 +2644,7 @@ class RecipeView {
       </p>
       <a
         class="btn--small recipe__btn"
-        href="${recipe.sourceUrl}"
+        href="${this.#data.sourceUrl}"
         target="_blank"
       >
         <span>Directions</span>
