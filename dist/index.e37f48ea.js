@@ -610,7 +610,7 @@ var _runtime = require("regenerator-runtime/runtime"); // for polyfilling async 
 const controlRecipes = async function() {
     try {
         const id = window.location.hash.slice(1);
-        console.log(id);
+        // console.log(id);
         if (!id) return;
         (0, _recipeViewJsDefault.default).renderSpinner();
         // 1) Loading Recipe
@@ -625,16 +625,22 @@ const controlRecipes = async function() {
 };
 const controlSearchResults = async function() {
     try {
+        // 1) get Data or query
         const query = (0, _searchViewJsDefault.default).getQuery();
         if (!query) return;
+        // Load Search results.
         await _modelJs.loadSearchResults(query);
+        // Render Results
         console.log(_modelJs.state.search.results);
-    } catch  {}
+    } catch (err) {
+        console.log(err);
+    }
 };
 controlSearchResults();
 // controlRecipes();
 const init = function() {
     (0, _recipeViewJsDefault.default).addHandlerRender(controlRecipes); // I just used this to implement the publisher-subscriber pattern where by there is a function in the view, and I need to pass in the controller function inside the function so that it can display what it has to display on listening to an event lister. remember, I want the view to present items on the webpage while the controller only controls.
+    (0, _searchViewJsDefault.default).addHandlerSearch(controlSearchResults);
 };
 init();
 
@@ -2604,7 +2610,7 @@ const getJSON = async function(url) {
     }
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./config":"k5Hzs"}],"l60JC":[function(require,module,exports,__globalThis) {
+},{"./config":"k5Hzs","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l60JC":[function(require,module,exports,__globalThis) {
 // This contains all the things rendered to the webpage
 // Importing Icons
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -2612,7 +2618,7 @@ parcelHelpers.defineInteropFlag(exports);
 var _iconsSvg = require("../../img/icons.svg");
 var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
 var _fractional = require("fractional");
-console.log((0, _fractional.Fraction));
+// console.log(Fraction);
 class RecipeView {
     #parentElement = document.querySelector(".recipe");
     #data;
@@ -3056,13 +3062,24 @@ module.exports.Fraction = Fraction;
 },{}],"c7Rpf":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-class SearchView {
+class searchView {
     #parentEl = document.querySelector(".search");
     getQuery() {
-        return this.#parentEl.querySelector(".search__field").value;
+        const query = this.#parentEl.querySelector(".search__field").value;
+        this.#clearInput();
+        return query;
+    }
+    #clearInput() {
+        this.#parentEl.querySelector(".search__field").value = "";
+    }
+    addHandlerSearch(handler) {
+        this.#parentEl.addEventListener("submit", function(e) {
+            e.preventDefault();
+            handler();
+        });
     }
 }
-exports.default = new SearchView();
+exports.default = new searchView();
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["ik2hV","aenu9"], "aenu9", "parcelRequire94c2")
 

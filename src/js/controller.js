@@ -1,6 +1,6 @@
 import * as model from "./model.js";
 import recipeView from "./views/recipeView.js";
-import SearchView from "./views/SearchView.js";
+import searchView from "./views/SearchView.js";
 
 import "core-js/stable"; // for polyfilling everything else.
 import "regenerator-runtime/runtime"; // for polyfilling async Await
@@ -13,7 +13,7 @@ import "regenerator-runtime/runtime"; // for polyfilling async Await
 const controlRecipes = async function () {
   try {
     const id = window.location.hash.slice(1);
-    console.log(id);
+    // console.log(id);
 
     if (!id) return;
     recipeView.renderSpinner();
@@ -34,11 +34,18 @@ const controlRecipes = async function () {
 
 const controlSearchResults = async function () {
   try {
-    const query = SearchView.getQuery();
+    // 1) get Data or query
+    const query = searchView.getQuery();
     if (!query) return;
+
+    // Load Search results.
     await model.loadSearchResults(query);
+
+    // Render Results
     console.log(model.state.search.results);
-  } catch {}
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 controlSearchResults();
@@ -46,6 +53,8 @@ controlSearchResults();
 
 const init = function () {
   recipeView.addHandlerRender(controlRecipes); // I just used this to implement the publisher-subscriber pattern where by there is a function in the view, and I need to pass in the controller function inside the function so that it can display what it has to display on listening to an event lister. remember, I want the view to present items on the webpage while the controller only controls.
+
+  searchView.addHandlerSearch(controlSearchResults);
 };
 
 init();
