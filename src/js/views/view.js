@@ -4,6 +4,9 @@ export default class view {
   _data;
 
   render(data) {
+    if (!data || (Array.isArray(data) && data.length === 0))
+      return this.renderError(); //if there is no data or the data is an array but empty, give an error message.
+
     this._data = data;
     const markup = this._generateMarkup();
     this._clear();

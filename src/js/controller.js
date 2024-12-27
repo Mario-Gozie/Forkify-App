@@ -11,6 +11,11 @@ import "regenerator-runtime/runtime"; // for polyfilling async Await
 
 ///////////////////////////////////////
 
+if (module.hot) {
+  // |This is not javaScript. it comes from parcel
+  module.hot.accept;
+}
+
 const controlRecipes = async function () {
   try {
     const id = window.location.hash.slice(1);
