@@ -1,6 +1,7 @@
 import * as model from "./model.js";
 import recipeView from "./views/recipeView.js";
 import searchView from "./views/SearchView.js";
+import resultsView from "./views/resultsView.js";
 
 import "core-js/stable"; // for polyfilling everything else.
 import "regenerator-runtime/runtime"; // for polyfilling async Await
@@ -27,13 +28,14 @@ const controlRecipes = async function () {
     // 2) Rendering Recipe
     recipeView.render(model.state.recipe);
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     recipeView.renderError();
   }
 };
 
 const controlSearchResults = async function () {
   try {
+    resultsView.renderSpinner();
     // 1) get Data or query
     const query = searchView.getQuery();
     if (!query) return;
@@ -43,6 +45,7 @@ const controlSearchResults = async function () {
 
     //  Render Results
     console.log(model.state.search.results);
+    resultsView.render(model.state.search.results);
   } catch (err) {
     console.log(err);
   }
