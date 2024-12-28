@@ -2,9 +2,11 @@ import * as model from "./model.js";
 import recipeView from "./views/recipeView.js";
 import searchView from "./views/SearchView.js";
 import resultsView from "./views/resultsView.js";
+import paginationView from "./views/paginationView.js";
 
-import "core-js/stable"; // for polyfilling everything else.
+import "core-js/modules/es.symbol.js"; // for polyfilling everything else.
 import "regenerator-runtime/runtime"; // for polyfilling async Await
+// import { search } from "core-js/fn/symbol";
 
 // NEW API URL (instead of the one shown in the video)
 // https://forkify-api.jonas.io
@@ -54,6 +56,10 @@ const controlSearchResults = async function () {
     // resultsView.render(model.state.search.results);
 
     resultsView.render(model.getSearchResultsPage(2));
+
+    // Render the initial pagination buttons.
+
+    paginationView.render(model.state.search);
   } catch (err) {
     console.log(err);
   }
