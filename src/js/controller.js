@@ -49,14 +49,17 @@ const controlSearchResults = async function () {
     await model.loadSearchResults(query);
 
     //  Render Results
-    console.log(model.state.search.results);
-    resultsView.render(model.state.search.results);
+    // console.log(model.state.search.results);
+
+    // resultsView.render(model.state.search.results);
+
+    resultsView.render(model.getSearchResultsPage(2));
   } catch (err) {
     console.log(err);
   }
 };
 
-controlSearchResults();
+// controlSearchResults();
 // controlRecipes();
 
 const init = function () {

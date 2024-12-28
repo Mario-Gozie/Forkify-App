@@ -1,12 +1,12 @@
 // This contains everything that has to do with the business aspect of the webpage.
 import { async } from "regenerator-runtime";
-import { API_URL } from "./config";
+import { API_URL, REST_PER_PAGE } from "./config";
 import { getJSON } from "./helpers";
 
 export const state = {
   //The state contains all the data we need for our application.
   recipe: {},
-  search: { query: "", results: [] },
+  search: { query: "", results: [], page: 1, resultsPerPage: REST_PER_PAGE },
 };
 
 export const loadRecipe = async function (id) {
@@ -49,4 +49,13 @@ export const loadSearchResults = async function (query) {
   } catch (err) {
     throw err;
   }
+};
+
+// Pagination
+// This is not an async function because we have the data already.
+export const getSearchResultsPage = function (page = state.search.page) {
+  state.search.page = page;
+  const start = (page - 1) * state.search.resultsPerPage; //0;
+  const end = page * state.search.resultsPerPage; //9;
+  return state.search.results.slice(start, end);
 };
