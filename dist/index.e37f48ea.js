@@ -641,7 +641,7 @@ const controlSearchResults = async function() {
         //  Render Results
         // console.log(model.state.search.results);
         // resultsView.render(model.state.search.results);
-        (0, _resultsViewJsDefault.default).render(_modelJs.getSearchResultsPage(2));
+        (0, _resultsViewJsDefault.default).render(_modelJs.getSearchResultsPage(1));
         // Render the initial pagination buttons.
         (0, _paginationViewJsDefault.default).render(_modelJs.state.search);
     } catch (err) {
@@ -1905,12 +1905,16 @@ var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
 class paginationView extends (0, _viewDefault.default) {
     _parentElement = document.querySelector(".pagination");
     _generateMarkup() {
-        const numPages = this._data.results / this._data.resultsPerPage;
+        const numPages = Math.ceil(this._data.results.length / this._data.resultsPerPage);
         console.log(numPages);
-    // Page 1 and there are other pages
-    // we are on page1 and there are no other pages,
-    // We are on the last page
-    // other page
+        // Page 1 and there are other pages
+        if (this._data.page === 1 && numPages > 1) return "page 1, others";
+        // we are on page1 and there are no other pages,
+        // We are on the last page
+        if (this._data.page === numPages && numPages > 1) return "last page";
+        // other page
+        if (this._data.page < numPages) return "other page";
+        return "only 1 page";
     }
 }
 exports.default = new paginationView();
