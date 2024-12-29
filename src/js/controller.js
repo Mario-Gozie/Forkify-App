@@ -68,10 +68,16 @@ const controlSearchResults = async function () {
 // controlSearchResults();
 // controlRecipes();
 
+const controlPagination = function () {
+  console.log("Pag controler");
+};
+
 const init = function () {
   recipeView.addHandlerRender(controlRecipes); // I just used this to implement the publisher-subscriber pattern where by there is a function in the view, and I need to pass in the controller function inside the function so that it can display what it has to display on listening to an event lister. remember, I want the view to present items on the webpage while the controller only controls.
 
   searchView.addHandlerSearch(controlSearchResults);
+
+  paginationView.addHandlerClick(controlPagination);
 };
 
 init();
