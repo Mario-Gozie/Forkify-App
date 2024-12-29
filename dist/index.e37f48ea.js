@@ -641,7 +641,7 @@ const controlSearchResults = async function() {
         //  Render Results
         // console.log(model.state.search.results);
         // resultsView.render(model.state.search.results);
-        (0, _resultsViewJsDefault.default).render(_modelJs.getSearchResultsPage(6));
+        (0, _resultsViewJsDefault.default).render(_modelJs.getSearchResultsPage(3));
         // Render the initial pagination buttons.
         (0, _paginationViewJsDefault.default).render(_modelJs.state.search);
     } catch (err) {
@@ -650,8 +650,12 @@ const controlSearchResults = async function() {
 };
 // controlSearchResults();
 // controlRecipes();
-const controlPagination = function() {
-    console.log("Pag controler");
+const controlPagination = function(goToPage) {
+    //  1) Render New Results
+    (0, _resultsViewJsDefault.default).render(_modelJs.getSearchResultsPage(goToPage));
+    // 2) Render New pagination buttons.
+    (0, _paginationViewJsDefault.default).render(_modelJs.state.search);
+    console.log(goToPage);
 };
 const init = function() {
     (0, _recipeViewJsDefault.default).addHandlerRender(controlRecipes); // I just used this to implement the publisher-subscriber pattern where by there is a function in the view, and I need to pass in the controller function inside the function so that it can display what it has to display on listening to an event lister. remember, I want the view to present items on the webpage while the controller only controls.
@@ -1911,8 +1915,11 @@ class paginationView extends (0, _viewDefault.default) {
     addHandlerClick(handler) {
         this._parentElement.addEventListener("click", function(e) {
             const btn = e.target.closest(".btn--inline");
+            if (!btn) return;
             console.log(btn);
-            handler();
+            const goToPage = +btn.dataset.goto; // The Plus sign is used to convert data attribute value which is usually a string to a number
+            console.log(goToPage);
+            handler(goToPage);
         });
     }
     _generateMarkup() {
@@ -1920,7 +1927,7 @@ class paginationView extends (0, _viewDefault.default) {
         const numPages = Math.ceil(this._data.results.length / this._data.resultsPerPage);
         console.log(numPages);
         // Page 1 and there are other pages
-        if (curPage === 1 && numPages > 1) return `<button class="btn--inline pagination__btn--next">
+        if (curPage === 1 && numPages > 1) return `<button data-goto = "${curPage + 1}" class=" btn--inline pagination__btn--next">
       <span>Page ${curPage + 1}</span>
       <svg class="search__icon">
         <use href="${0, _iconsSvgDefault.default}#icon-arrow-right"></use>
@@ -1928,19 +1935,19 @@ class paginationView extends (0, _viewDefault.default) {
     </button>`;
         // we are on page1 and there are no other pages,
         // We are on the last page
-        if (curPage === numPages && numPages > 1) return `<button class="btn--inline pagination__btn--prev">
+        if (curPage === numPages && numPages > 1) return `<button data-goto = "${curPage - 1}" class="btn--inline pagination__btn--prev">
       <svg class="search__icon">
         <use href="${0, _iconsSvgDefault.default}s#icon-arrow-left"></use>
       </svg>
       <span>Page ${curPage - 1}</span>
     </button>`;
         // other page
-        if (curPage < numPages) return `<button class="btn--inline pagination__btn--prev">
+        if (curPage < numPages) return `<button data-goto = "${curPage - 1}" class="btn--inline pagination__btn--prev">
       <svg class="search__icon">
         <use href="${0, _iconsSvgDefault.default}s#icon-arrow-left"></use>
       </svg>
       <span>Page ${curPage - 1}</span>
-    </button><button class="btn--inline pagination__btn--next">
+    </button><button data-goto = "${curPage + 1}" class="btn--inline pagination__btn--next">
       <span>Page ${curPage + 1}</span>
       <svg class="search__icon">
         <use href="${0, _iconsSvgDefault.default}#icon-arrow-right"></use>
