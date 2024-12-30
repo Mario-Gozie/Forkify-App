@@ -620,6 +620,8 @@ const controlRecipes = async function() {
         // console.log(id);
         if (!id) return;
         (0, _recipeViewJsDefault.default).renderSpinner();
+        // 0) update results to mark selected search result
+        (0, _resultsViewJsDefault.default).update(_modelJs.getSearchResultsPage());
         // 1) Loading Recipe
         await _modelJs.loadRecipe(id); // we didn't put the result of this promise into a variabe because we dont need it. in the model module, it will put it's result into the recipe object. but because we need to handle all promises, that is why we had to use an await here.
         // const { recipe } = model.state; //trying to destructure the recipe object of the state object to see it's content.
@@ -1583,7 +1585,8 @@ class view {
         this._parentElement.insertAdjacentHTML("afterbegin", markup); // adding the html code as the first value of the recipe container.
     }
     update(data) {
-        if (!data || Array.isArray(data) && data.length === 0) return this.renderError();
+        // if (!data || (Array.isArray(data) && data.length === 0))
+        //   return this.renderError();
         this._data = data;
         const newMarkup = this._generateMarkup();
         // We need to create a new markup, and copare it with the old one. Then change only text and attributes that has changed so far. The newMarkup above is a string and we can not use it for comparison because it can't be compared with the DOM element we have on the page. so we need to convert it to this newMarkup String to a DOM object, that will live in the memory, which we can use for comparison.
@@ -1939,8 +1942,9 @@ class ResultsView extends (0, _viewDefault.default) {
         return this._data.map(this._generateMarkupPreview).join("");
     }
     _generateMarkupPreview(result) {
+        const id = window.location.hash.slice(1);
         return `<li class="preview">
-            <a class="preview__link " href="#${result.id}">
+            <a class="preview__link ${result.id === id ? "preview_link--active" : ""}" href="#${result.id}">
               <figure class="preview__fig">
                 <img src="${result.image}" alt="${result.title}" />
               </figure>
