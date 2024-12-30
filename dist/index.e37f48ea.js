@@ -1591,8 +1591,22 @@ class view {
         const newElements = Array.from(newDOM.querySelectorAll("*")); // this will select everything in the new DOM element created.
         // I used array.from to convert the whole elements from a nodelist to an array.
         const curElements = Array.from(this._parentElement.querySelectorAll("*"));
-        console.log(newElements);
-        console.log(curElements);
+        // console.log(newElements);
+        // console.log(curElements);
+        newElements.forEach((newEl, i)=>{
+            const curEl = curElements[i];
+            console.log(curEl, newEl.isEqualNode(curEl)); // They isEqualNode method will compare the two html elements.
+            // updates changed text
+            if (!newEl.isEqualNode(curEl) && newEl.firstChild?.nodeValue.trim() !== "") // console.log("💥", newEl.firstChild.nodeValue.trim());
+            curEl.textContent = newEl.textContent;
+            // Updates changed Attributes
+            if (!newEl.isEqualNode(curEl)) // console.log(newEl.attributes);
+            // console.log(Array.from(newEl.attributes));
+            Array.from(newEl.attributes).forEach((attr)=>{
+                // console.log();
+                curEl.setAttribute(attr.name, attr.value);
+            });
+        });
     }
     _clear() {
         this._parentElement.innerHTML = "";
