@@ -1916,16 +1916,16 @@ class paginationView extends (0, _viewDefault.default) {
         this._parentElement.addEventListener("click", function(e) {
             const btn = e.target.closest(".btn--inline");
             if (!btn) return;
-            console.log(btn);
+            //   console.log(btn);
             const goToPage = +btn.dataset.goto; // The Plus sign is used to convert data attribute value which is usually a string to a number
-            console.log(goToPage);
+            //   console.log(goToPage);
             handler(goToPage);
         });
     }
     _generateMarkup() {
         const curPage = this._data.page;
         const numPages = Math.ceil(this._data.results.length / this._data.resultsPerPage);
-        console.log(numPages);
+        // console.log(numPages);
         // Page 1 and there are other pages
         if (curPage === 1 && numPages > 1) return `<button data-goto = "${curPage + 1}" class=" btn--inline pagination__btn--next">
       <span>Page ${curPage + 1}</span>

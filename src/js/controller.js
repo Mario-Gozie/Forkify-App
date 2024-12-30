@@ -79,6 +79,14 @@ const controlPagination = function (goToPage) {
   console.log(goToPage);
 };
 
+controlServings(){
+  //Update recipe servings  in the state.
+  model.updateServings(6)
+
+  // Update the recipeView
+
+}
+
 const init = function () {
   recipeView.addHandlerRender(controlRecipes); // I just used this to implement the publisher-subscriber pattern where by there is a function in the view, and I need to pass in the controller function inside the function so that it can display what it has to display on listening to an event lister. remember, I want the view to present items on the webpage while the controller only controls.
 
