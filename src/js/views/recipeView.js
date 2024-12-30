@@ -24,6 +24,17 @@ class RecipeView extends view {
     );
   }
 
+  addHandlerUpdateServings(handler) {
+    this._parentElement.addEventListener("click", function (e) {
+      const btn = e.target.closest(".btn--update-servings");
+      if (!btn) return;
+      console.log(btn);
+
+      const { updateTo } = btn.dataset; // the update-to here is using a camel case here because when ther is a dash between a dataset data name, a camel case is used when it needs to be used.
+      if (+updateTo > 0) handler(+updateTo); // we want to only udate when service is greater than 0
+    });
+  }
+
   _generateMarkup() {
     return `
     <figure class="recipe__fig">
@@ -55,12 +66,16 @@ class RecipeView extends view {
         <span class="recipe__info-text">servings</span>
 
         <div class="recipe__info-buttons">
-          <button class="btn--tiny btn--increase-servings">
+          <button class="btn--tiny btn--update-servings" data-update-to = ${
+            this._data.servings - 1
+          } >
             <svg>
               <use href="${icons}#icon-minus-circle"></use>
             </svg>
           </button>
-          <button class="btn--tiny btn--increase-servings">
+          <button class="btn--tiny btn--update-servings" data-update-to = ${
+            this._data.servings + 1
+          } >
             <svg>
               <use href="${icons}#icon-plus-circle"></use>
             </svg>

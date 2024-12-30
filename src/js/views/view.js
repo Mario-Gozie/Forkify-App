@@ -13,6 +13,26 @@ export default class view {
     this._parentElement.insertAdjacentHTML("afterbegin", markup); // adding the html code as the first value of the recipe container.
   }
 
+  update(data) {
+    if (!data || (Array.isArray(data) && data.length === 0))
+      return this.renderError();
+    this._data = data;
+    const newMarkup = this._generateMarkup();
+
+    // We need to create a new markup, and copare it with the old one. Then change only text and attributes that has changed so far. The newMarkup above is a string and we can not use it for comparison because it can't be compared with the DOM element we have on the page. so we need to convert it to this newMarkup String to a DOM object, that will live in the memory, which we can use for comparison.
+
+    const newDOM = document.createRange().createContextualFragment(newMarkup); //This will create a new DOM element which will not be living in our DOM and this will be based on the updated value. you can see that we just want to update part of the DOM.
+
+    const newElements = Array.from(newDOM.querySelectorAll("*")); // this will select everything in the new DOM element created.
+
+    // I used array.from to convert the whole elements from a nodelist to an array.
+
+    const curElements = Array.from(this._parentElement.querySelectorAll("*"));
+
+    console.log(newElements);
+    console.log(curElements);
+  }
+
   _clear() {
     this._parentElement.innerHTML = "";
   }

@@ -657,8 +657,16 @@ const controlPagination = function(goToPage) {
     (0, _paginationViewJsDefault.default).render(_modelJs.state.search);
     console.log(goToPage);
 };
+const controlServings = function(newServings) {
+    //Update recipe servings  in the state.
+    _modelJs.updateServings(newServings);
+    // Update the recipeView
+    // recipeView.render(model.state.recipe);  // using render to update a view will basically reload everything, including pixtures. we need to make it better, so it would only update the necessary parts.
+    (0, _recipeViewJsDefault.default).update(_modelJs.state.recipe);
+};
 const init = function() {
     (0, _recipeViewJsDefault.default).addHandlerRender(controlRecipes); // I just used this to implement the publisher-subscriber pattern where by there is a function in the view, and I need to pass in the controller function inside the function so that it can display what it has to display on listening to an event lister. remember, I want the view to present items on the webpage while the controller only controls.
+    (0, _recipeViewJsDefault.default).addHandlerUpdateServings(controlServings);
     (0, _searchViewJsDefault.default).addHandlerSearch(controlSearchResults);
     (0, _paginationViewJsDefault.default).addHandlerClick(controlPagination);
 };
@@ -1287,6 +1295,7 @@ parcelHelpers.export(exports, "state", ()=>state);
 parcelHelpers.export(exports, "loadRecipe", ()=>loadRecipe);
 parcelHelpers.export(exports, "loadSearchResults", ()=>loadSearchResults);
 parcelHelpers.export(exports, "getSearchResultsPage", ()=>getSearchResultsPage);
+parcelHelpers.export(exports, "updateServings", ()=>updateServings);
 var _regeneratorRuntime = require("regenerator-runtime");
 var _config = require("./config");
 var _helpers = require("./helpers");
@@ -1344,6 +1353,13 @@ const getSearchResultsPage = function(page = state.search.page) {
     const start = (page - 1) * state.search.resultsPerPage; //0;
     const end = page * state.search.resultsPerPage; //9;
     return state.search.results.slice(start, end);
+};
+const updateServings = function(newServings) {
+    state.recipe.ingredients.forEach((ing)=>{
+        ing.quantity = ing.quantity / newServings / state.recipe.servings;
+    // newQt = oldQt * newServings / oldServings // 2 * 8/4 = 4
+    });
+    state.recipe.servings = newServings;
 };
 
 },{"regenerator-runtime":"dXNgZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./config":"k5Hzs","./helpers":"hGI1E"}],"k5Hzs":[function(require,module,exports,__globalThis) {
@@ -1415,6 +1431,15 @@ class RecipeView extends (0, _viewDefault.default) {
             "load"
         ].forEach((ev)=>window.addEventListener(ev, handler));
     }
+    addHandlerUpdateServings(handler) {
+        this._parentElement.addEventListener("click", function(e) {
+            const btn = e.target.closest(".btn--update-servings");
+            if (!btn) return;
+            console.log(btn);
+            const { updateTo } = btn.dataset; // the update-to here is using a camel case here because when ther is a dash between a dataset data name, a camel case is used when it needs to be used.
+            if (+updateTo > 0) handler(+updateTo); // we want to only udate when service is greater than 0
+        });
+    }
     _generateMarkup() {
         return `
     <figure class="recipe__fig">
@@ -1440,12 +1465,12 @@ class RecipeView extends (0, _viewDefault.default) {
         <span class="recipe__info-text">servings</span>
 
         <div class="recipe__info-buttons">
-          <button class="btn--tiny btn--increase-servings">
+          <button class="btn--tiny btn--update-servings" data-update-to = ${this._data.servings - 1} >
             <svg>
               <use href="${0, _iconsSvgDefault.default}#icon-minus-circle"></use>
             </svg>
           </button>
-          <button class="btn--tiny btn--increase-servings">
+          <button class="btn--tiny btn--update-servings" data-update-to = ${this._data.servings + 1} >
             <svg>
               <use href="${0, _iconsSvgDefault.default}#icon-plus-circle"></use>
             </svg>
@@ -1556,6 +1581,18 @@ class view {
         const markup = this._generateMarkup();
         this._clear();
         this._parentElement.insertAdjacentHTML("afterbegin", markup); // adding the html code as the first value of the recipe container.
+    }
+    update(data) {
+        if (!data || Array.isArray(data) && data.length === 0) return this.renderError();
+        this._data = data;
+        const newMarkup = this._generateMarkup();
+        // We need to create a new markup, and copare it with the old one. Then change only text and attributes that has changed so far. The newMarkup above is a string and we can not use it for comparison because it can't be compared with the DOM element we have on the page. so we need to convert it to this newMarkup String to a DOM object, that will live in the memory, which we can use for comparison.
+        const newDOM = document.createRange().createContextualFragment(newMarkup); //This will create a new DOM element which will not be living in our DOM and this will be based on the updated value. you can see that we just want to update part of the DOM.
+        const newElements = Array.from(newDOM.querySelectorAll("*")); // this will select everything in the new DOM element created.
+        // I used array.from to convert the whole elements from a nodelist to an array.
+        const curElements = Array.from(this._parentElement.querySelectorAll("*"));
+        console.log(newElements);
+        console.log(curElements);
     }
     _clear() {
         this._parentElement.innerHTML = "";
