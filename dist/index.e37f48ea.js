@@ -624,15 +624,16 @@ const controlRecipes = async function() {
         (0, _recipeViewJsDefault.default).renderSpinner();
         // 0) update results to mark selected search result
         (0, _resultsViewJsDefault.default).update(_modelJs.getSearchResultsPage());
+        // 1) updating bookmarks view
         (0, _bookmarksViewJsDefault.default).update(_modelJs.state.bookmarks);
-        // 1) Loading Recipe
+        // 2) Loading Recipe
         await _modelJs.loadRecipe(id); // we didn't put the result of this promise into a variabe because we dont need it. in the model module, it will put it's result into the recipe object. but because we need to handle all promises, that is why we had to use an await here.
         // const { recipe } = model.state; //trying to destructure the recipe object of the state object to see it's content.
-        // 2) Rendering Recipe
+        // 3) Rendering Recipe
         (0, _recipeViewJsDefault.default).render(_modelJs.state.recipe);
     } catch (err) {
-        // console.log(err);
         (0, _recipeViewJsDefault.default).renderError();
+        console.log(err);
     }
 };
 const controlSearchResults = async function() {
@@ -679,7 +680,11 @@ const controlAddBookmark = function() {
     // 3) Render bookmarks
     (0, _bookmarksViewJsDefault.default).render(_modelJs.state.bookmarks);
 };
+const controlBookmarks = function() {
+    (0, _bookmarksViewJsDefault.default).render(_modelJs.state.bookmarks);
+};
 const init = function() {
+    (0, _bookmarksViewJsDefault.default).addHandlerRender(controlBookmarks);
     (0, _recipeViewJsDefault.default).addHandlerRender(controlRecipes); // I just used this to implement the publisher-subscriber pattern where by there is a function in the view, and I need to pass in the controller function inside the function so that it can display what it has to display on listening to an event lister. remember, I want the view to present items on the webpage while the controller only controls.
     (0, _recipeViewJsDefault.default).addHandlerUpdateServings(controlServings);
     (0, _recipeViewJsDefault.default).addHandlerAddBookmark(controlAddBookmark);
@@ -1384,11 +1389,16 @@ const updateServings = function(newServings) {
     });
     state.recipe.servings = newServings;
 };
+const persistBookmarks = function() {
+    // This is the function that stores data into the web browser local storage. here we used localStorage.setItem give the stored item a name, which in this case is Bookmarks, then convert it to strings wih JSON.stringify
+    localStorage.setItem("Bookmarks", JSON.stringify(state.bookmarks));
+};
 const addBookmark = function(recipe) {
     // Add bookmark
     state.bookmarks.push(recipe);
     // Mark current recipe as bookmark
     if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
+    persistBookmarks(); // calling the function for adding things to the local storage
 };
 const deleteBookmark = function(id) {
     // Delete bookmark
@@ -1396,7 +1406,20 @@ const deleteBookmark = function(id) {
     state.bookmarks.splice(index, 1); // deleting with splice
     // Mark Current Recipe as not bookmarked.
     if (id === state.recipe.id) state.recipe.bookmarked = false;
+    persistBookmarks(); // calling the function for adding things to the local storage
 };
+// The function below loads the data into the bookmark container immidiately the site is loaded.
+const init = function() {
+    const storage = localStorage.getItem("Bookmarks"); // first storing the data into a variable.
+    // console.log(storage);
+    if (storage) state.bookmarks = JSON.parse(storage);
+};
+init();
+// console.log(state.bookmarks);
+// ONE FUNCTION WE MIGHT (for quickly clearing bookmarks while working on the project.)
+const clearBookmarks = function() {
+    localStorage.clear("bookmarks");
+}; // clearBookmarks();
 
 },{"regenerator-runtime":"dXNgZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./config":"k5Hzs","./helpers":"hGI1E"}],"k5Hzs":[function(require,module,exports,__globalThis) {
 // This contains all the variables that are constants needed to be reused throughout this project.
@@ -1982,7 +2005,7 @@ class ResultsView extends (0, _viewDefault.default) {
     _errorMessage = `No recipies found for your query! Please try again ;)`;
     _message = "";
     _generateMarkup() {
-        console.log(this._data);
+        // console.log(this._data);
         // return this._data.map((dat) => this._generateMarkupPreview(dat)).join("");
         return this._data.map((result)=>(0, _previewViewDefault.default).render(result, false)).join("");
     }
@@ -3988,8 +4011,11 @@ class BookmarksView extends (0, _viewDefault.default) {
     _parentElement = document.querySelector(".bookmarks__list");
     _errorMessage = `No bookmarks yet. Find a nice recipe and bookmark it ;)`;
     _message = "";
+    addHandlerRender(handler) {
+        window.addEventListener("load", handler);
+    }
     _generateMarkup() {
-        console.log(this._data);
+        // console.log(this._data);
         // return this._data.map((dat) => this._generateMarkupPreview(dat)).join("");
         return this._data.map((bookmark)=>(0, _previewViewDefault.default).render(bookmark, false)).join("");
     }

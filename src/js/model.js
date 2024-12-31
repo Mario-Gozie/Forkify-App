@@ -78,6 +78,11 @@ export const updateServings = function (newServings) {
   state.recipe.servings = newServings;
 };
 
+const persistBookmarks = function () {
+  // This is the function that stores data into the web browser local storage. here we used localStorage.setItem give the stored item a name, which in this case is Bookmarks, then convert it to strings wih JSON.stringify
+  localStorage.setItem("Bookmarks", JSON.stringify(state.bookmarks));
+};
+
 export const addBookmark = function (recipe) {
   // Add bookmark
   state.bookmarks.push(recipe);
@@ -87,6 +92,8 @@ export const addBookmark = function (recipe) {
   if (recipe.id === state.recipe.id) {
     state.recipe.bookmarked = true;
   }
+
+  persistBookmarks(); // calling the function for adding things to the local storage
 };
 
 export const deleteBookmark = function (id) {
@@ -96,4 +103,27 @@ export const deleteBookmark = function (id) {
 
   // Mark Current Recipe as not bookmarked.
   if (id === state.recipe.id) state.recipe.bookmarked = false;
+
+  persistBookmarks(); // calling the function for adding things to the local storage
 };
+
+// The function below loads the data into the bookmark container immidiately the site is loaded.
+const init = function () {
+  const storage = localStorage.getItem("Bookmarks"); // first storing the data into a variable.
+
+  // console.log(storage);
+
+  if (storage) state.bookmarks = JSON.parse(storage);
+};
+
+init();
+
+// console.log(state.bookmarks);
+
+// ONE FUNCTION WE MIGHT (for quickly clearing bookmarks while working on the project.)
+
+const clearBookmarks = function () {
+  localStorage.clear("bookmarks");
+};
+
+// clearBookmarks();
