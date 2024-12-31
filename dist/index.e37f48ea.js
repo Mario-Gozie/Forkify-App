@@ -643,7 +643,7 @@ const controlSearchResults = async function() {
         //  Render Results
         // console.log(model.state.search.results);
         // resultsView.render(model.state.search.results);
-        (0, _resultsViewJsDefault.default).render(_modelJs.getSearchResultsPage(3));
+        (0, _resultsViewJsDefault.default).render(_modelJs.getSearchResultsPage());
         // Render the initial pagination buttons.
         (0, _paginationViewJsDefault.default).render(_modelJs.state.search);
     } catch (err) {
@@ -1345,7 +1345,9 @@ const loadSearchResults = async function(query) {
                 image: rec.image_url
             };
         });
-        console.log(state.search.results);
+        state.search.page = 1; // This code will reset the page number to 1 after every search.
+        console.log(state.search.page);
+    // console.log(state.search.results);
     } catch (err) {
         throw err;
     }

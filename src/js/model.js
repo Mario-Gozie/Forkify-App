@@ -45,7 +45,12 @@ export const loadSearchResults = async function (query) {
         image: rec.image_url,
       };
     });
-    console.log(state.search.results);
+
+    state.search.page = 1; // This code will reset the page number to 1 after every search.
+
+    console.log(state.search.page);
+
+    // console.log(state.search.results);
   } catch (err) {
     throw err;
   }
