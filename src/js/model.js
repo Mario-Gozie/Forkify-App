@@ -7,6 +7,7 @@ export const state = {
   //The state contains all the data we need for our application.
   recipe: {},
   search: { query: "", results: [], page: 1, resultsPerPage: REST_PER_PAGE },
+  bookmarks: [],
 };
 
 export const loadRecipe = async function (id) {
@@ -24,7 +25,7 @@ export const loadRecipe = async function (id) {
       ingredients: recipe.ingredients,
     };
 
-    console.log(state.recipe);
+    // console.log(state.recipe);
   } catch (err) {
     // Temporary error handling
     // console.error(`${err} 💥💥💥💥`);
@@ -36,7 +37,7 @@ export const loadSearchResults = async function (query) {
   try {
     state.search.query = query;
     const data = await getJSON(`${API_URL}?search=${query}`);
-    console.log(data);
+    // console.log(data);
     state.search.results = data.data.recipes.map((rec) => {
       return {
         id: rec.id,
@@ -48,7 +49,7 @@ export const loadSearchResults = async function (query) {
 
     state.search.page = 1; // This code will reset the page number to 1 after every search.
 
-    console.log(state.search.page);
+    // console.log(state.search.page);
 
     // console.log(state.search.results);
   } catch (err) {
@@ -72,4 +73,15 @@ export const updateServings = function (newServings) {
   });
 
   state.recipe.servings = newServings;
+};
+
+export const addBookmark = function (recipe) {
+  // Add bookmark
+  state.bookmarks.push(recipe);
+
+  // Mark current recipe as bookmark
+
+  if (recipe.id === state.recipe.id) {
+    state.recipe.bookmarked = true;
+  }
 };

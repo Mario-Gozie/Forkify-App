@@ -666,9 +666,15 @@ const controlServings = function(newServings) {
     // recipeView.render(model.state.recipe);  // using render to update a view will basically reload everything, including pixtures. we need to make it better, so it would only update the necessary parts.
     (0, _recipeViewJsDefault.default).update(_modelJs.state.recipe);
 };
+const controlAddBookmark = function() {
+    _modelJs.addBookmark(_modelJs.state.recipe);
+    console.log(_modelJs.state.recipe);
+    (0, _recipeViewJsDefault.default).update(_modelJs.state.recipe);
+};
 const init = function() {
     (0, _recipeViewJsDefault.default).addHandlerRender(controlRecipes); // I just used this to implement the publisher-subscriber pattern where by there is a function in the view, and I need to pass in the controller function inside the function so that it can display what it has to display on listening to an event lister. remember, I want the view to present items on the webpage while the controller only controls.
     (0, _recipeViewJsDefault.default).addHandlerUpdateServings(controlServings);
+    (0, _recipeViewJsDefault.default).addHandlerAddBookmark(controlAddBookmark);
     (0, _searchViewJsDefault.default).addHandlerSearch(controlSearchResults);
     (0, _paginationViewJsDefault.default).addHandlerClick(controlPagination);
 };
@@ -1298,6 +1304,7 @@ parcelHelpers.export(exports, "loadRecipe", ()=>loadRecipe);
 parcelHelpers.export(exports, "loadSearchResults", ()=>loadSearchResults);
 parcelHelpers.export(exports, "getSearchResultsPage", ()=>getSearchResultsPage);
 parcelHelpers.export(exports, "updateServings", ()=>updateServings);
+parcelHelpers.export(exports, "addBookmark", ()=>addBookmark);
 var _regeneratorRuntime = require("regenerator-runtime");
 var _config = require("./config");
 var _helpers = require("./helpers");
@@ -1309,7 +1316,8 @@ const state = {
         results: [],
         page: 1,
         resultsPerPage: (0, _config.REST_PER_PAGE)
-    }
+    },
+    bookmarks: []
 };
 const loadRecipe = async function(id) {
     try {
@@ -1325,7 +1333,7 @@ const loadRecipe = async function(id) {
             cookingTime: recipe.cooking_time,
             ingredients: recipe.ingredients
         };
-        console.log(state.recipe);
+    // console.log(state.recipe);
     } catch (err) {
         // Temporary error handling
         // console.error(`${err} 💥💥💥💥`);
@@ -1336,7 +1344,7 @@ const loadSearchResults = async function(query) {
     try {
         state.search.query = query;
         const data = await (0, _helpers.getJSON)(`${(0, _config.API_URL)}?search=${query}`);
-        console.log(data);
+        // console.log(data);
         state.search.results = data.data.recipes.map((rec)=>{
             return {
                 id: rec.id,
@@ -1346,7 +1354,7 @@ const loadSearchResults = async function(query) {
             };
         });
         state.search.page = 1; // This code will reset the page number to 1 after every search.
-        console.log(state.search.page);
+    // console.log(state.search.page);
     // console.log(state.search.results);
     } catch (err) {
         throw err;
@@ -1364,6 +1372,12 @@ const updateServings = function(newServings) {
     // newQt = oldQt * newServings / oldServings // 2 * 8/4 = 4
     });
     state.recipe.servings = newServings;
+};
+const addBookmark = function(recipe) {
+    // Add bookmark
+    state.bookmarks.push(recipe);
+    // Mark current recipe as bookmark
+    if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
 };
 
 },{"regenerator-runtime":"dXNgZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./config":"k5Hzs","./helpers":"hGI1E"}],"k5Hzs":[function(require,module,exports,__globalThis) {
@@ -1444,6 +1458,14 @@ class RecipeView extends (0, _viewDefault.default) {
             if (+updateTo > 0) handler(+updateTo); // we want to only udate when service is greater than 0
         });
     }
+    addHandlerAddBookmark(handler) {
+        this._parentElement.addEventListener("click", function(e) {
+            const btn = e.target.closest(".btn--bookmark");
+            console.log(btn);
+            if (!btn) return;
+            handler();
+        });
+    }
     _generateMarkup() {
         return `
     <figure class="recipe__fig">
@@ -1485,9 +1507,9 @@ class RecipeView extends (0, _viewDefault.default) {
       <div class="recipe__user-generated">
 
       </div>
-      <button class="btn--round">
+      <button class="btn--round btn--bookmark">
         <svg class="">
-          <use href="${0, _iconsSvgDefault.default}#icon-bookmark-fill"></use>
+          <use href="${0, _iconsSvgDefault.default}#icon-bookmark${this._data.bookmarked ? "-fill" : ""}"></use>
         </svg>
       </button>
     </div>
@@ -1600,7 +1622,7 @@ class view {
         // console.log(curElements);
         newElements.forEach((newEl, i)=>{
             const curEl = curElements[i];
-            console.log(curEl, newEl.isEqualNode(curEl)); // They isEqualNode method will compare the two html elements.
+            // console.log(curEl, newEl.isEqualNode(curEl)); // They isEqualNode method will compare the two html elements.
             // updates changed text
             if (!newEl.isEqualNode(curEl) && newEl.firstChild?.nodeValue.trim() !== "") // console.log("💥", newEl.firstChild.nodeValue.trim());
             curEl.textContent = newEl.textContent;
@@ -1939,7 +1961,7 @@ class ResultsView extends (0, _viewDefault.default) {
     _errorMessage = `No recipies found for your query! Please try again ;)`;
     _message = "";
     _generateMarkup() {
-        console.log(this._data);
+        // console.log(this._data);
         // return this._data.map((dat) => this._generateMarkupPreview(dat)).join("");
         return this._data.map(this._generateMarkupPreview).join("");
     }

@@ -6,7 +6,7 @@ class ResultsView extends view {
   _errorMessage = `No recipies found for your query! Please try again ;)`;
   _message = "";
   _generateMarkup() {
-    console.log(this._data);
+    // console.log(this._data);
 
     // return this._data.map((dat) => this._generateMarkupPreview(dat)).join("");
     return this._data.map(this._generateMarkupPreview).join("");

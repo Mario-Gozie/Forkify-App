@@ -34,7 +34,7 @@ export default class view {
 
     newElements.forEach((newEl, i) => {
       const curEl = curElements[i];
-      console.log(curEl, newEl.isEqualNode(curEl)); // They isEqualNode method will compare the two html elements.
+      // console.log(curEl, newEl.isEqualNode(curEl)); // They isEqualNode method will compare the two html elements.
 
       // updates changed text
       if (
