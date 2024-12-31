@@ -4,7 +4,7 @@ import icons from "../../img/icons.svg";
 class PreviewView extends view {
   _parentElement = "";
 
-  _generateMarkupPreview() {
+  _generateMarkup() {
     const id = window.location.hash.slice(1);
     return `<li class="preview">
             <a class="preview__link ${
