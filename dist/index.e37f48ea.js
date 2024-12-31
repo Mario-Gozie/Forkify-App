@@ -606,6 +606,8 @@ var _resultsViewJs = require("./views/resultsView.js");
 var _resultsViewJsDefault = parcelHelpers.interopDefault(_resultsViewJs);
 var _paginationViewJs = require("./views/paginationView.js");
 var _paginationViewJsDefault = parcelHelpers.interopDefault(_paginationViewJs);
+var _bookmarksViewJs = require("./views/bookmarksView.js");
+var _bookmarksViewJsDefault = parcelHelpers.interopDefault(_bookmarksViewJs);
 var _esSymbolJs = require("core-js/modules/es.symbol.js"); // for polyfilling everything else.
 var _runtime = require("regenerator-runtime/runtime"); // for polyfilling async Await
 // import { search } from "core-js/fn/symbol";
@@ -667,10 +669,14 @@ const controlServings = function(newServings) {
     (0, _recipeViewJsDefault.default).update(_modelJs.state.recipe);
 };
 const controlAddBookmark = function() {
+    // 1) Add/remove bookmark
     if (!_modelJs.state.recipe.bookmarked) _modelJs.addBookmark(_modelJs.state.recipe);
     else _modelJs.deleteBookmark(_modelJs.state.recipe.id);
-    console.log(_modelJs.state.recipe);
+    // console.log(model.state.recipe);
+    // 2) Update recipe view
     (0, _recipeViewJsDefault.default).update(_modelJs.state.recipe);
+    // 3) Render bookmarks
+    (0, _bookmarksViewJsDefault.default).render(_modelJs.state.bookmarks);
 };
 const init = function() {
     (0, _recipeViewJsDefault.default).addHandlerRender(controlRecipes); // I just used this to implement the publisher-subscriber pattern where by there is a function in the view, and I need to pass in the controller function inside the function so that it can display what it has to display on listening to an event lister. remember, I want the view to present items on the webpage while the controller only controls.
@@ -681,7 +687,7 @@ const init = function() {
 };
 init();
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","regenerator-runtime/runtime":"dXNgZ","./model.js":"Y4A21","./views/recipeView.js":"l60JC","./views/SearchView.js":"c7Rpf","./views/resultsView.js":"cSbZE","./views/paginationView.js":"6z7bi","core-js/modules/es.symbol.js":"c39HV"}],"gkKU3":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","regenerator-runtime/runtime":"dXNgZ","./model.js":"Y4A21","./views/recipeView.js":"l60JC","./views/SearchView.js":"c7Rpf","./views/resultsView.js":"cSbZE","./views/paginationView.js":"6z7bi","core-js/modules/es.symbol.js":"c39HV","./views/bookmarksView.js":"4Lqzq"}],"gkKU3":[function(require,module,exports,__globalThis) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -3953,6 +3959,39 @@ $({
     }
 });
 
-},{"840946d70e8a2143":"dIGt4","ab5e4f7a7726b049":"8KyTD","dbf1e55f293c4447":"hL6D2","52dfb60ffa243118":"4DWO3","7dd92ded8a0ad49a":"5cb35"}]},["ik2hV","aenu9"], "aenu9", "parcelRequire94c2")
+},{"840946d70e8a2143":"dIGt4","ab5e4f7a7726b049":"8KyTD","dbf1e55f293c4447":"hL6D2","52dfb60ffa243118":"4DWO3","7dd92ded8a0ad49a":"5cb35"}],"4Lqzq":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _view = require("./view");
+var _viewDefault = parcelHelpers.interopDefault(_view);
+var _iconsSvg = require("../../img/icons.svg");
+var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
+class BookmarksView extends (0, _viewDefault.default) {
+    _parentElement = document.querySelector(".bookmarks__list");
+    _errorMessage = `No bookmarks yet. Find a nice recipe and bookmark it ;)`;
+    _message = "";
+    _generateMarkup() {
+        // console.log(this._data);
+        // return this._data.map((dat) => this._generateMarkupPreview(dat)).join("");
+        return this._data.map(this._generateMarkupPreview).join("");
+    }
+    _generateMarkupPreview(result) {
+        const id = window.location.hash.slice(1);
+        return `<li class="preview">
+            <a class="preview__link ${result.id === id ? "preview_link--active" : ""}" href="#${result.id}">
+              <figure class="preview__fig">
+                <img src="${result.image}" alt="${result.title}" />
+              </figure>
+              <div class="preview__data">
+                <h4 class="preview__title">${result.title}</h4>
+                <p class="preview__publisher">The Pioneer Woman</p>
+              </div>
+            </a>
+          </li>`;
+    }
+}
+exports.default = new BookmarksView();
+
+},{"./view":"bWlJ9","../../img/icons.svg":"cMpiy","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["ik2hV","aenu9"], "aenu9", "parcelRequire94c2")
 
 //# sourceMappingURL=index.e37f48ea.js.map
