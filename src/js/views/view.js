@@ -3,12 +3,14 @@ import icons from "../../img/icons.svg";
 export default class view {
   _data;
 
-  render(data) {
+  render(data, render = true) {
     if (!data || (Array.isArray(data) && data.length === 0))
       return this.renderError(); //if there is no data or the data is an array but empty, give an error message.
 
     this._data = data;
     const markup = this._generateMarkup();
+
+    if (!render) return markup;
     this._clear();
     this._parentElement.insertAdjacentHTML("afterbegin", markup); // adding the html code as the first value of the recipe container.
   }
