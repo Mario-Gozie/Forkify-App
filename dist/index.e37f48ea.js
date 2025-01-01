@@ -4041,13 +4041,18 @@ class AddRecipeView extends (0, _viewDefault.default) {
         //The _addHandlerShowWindow doesn't need a controller (it does not need to be in the controller region). that is why we created a constructor here and because it is a child class, we also used super and the called the _addHandlerShowWindow.
         super();
         this._addHandlerShowWindow();
+        this._addHandlerHideWindow();
     }
     toggleWindow() {
         this._overlay.classList.toggle("hidden");
         this._window.classList.toggle("hidden");
     }
     _addHandlerShowWindow() {
-        this._btnOpen.addEventListener("click", this.toggleWindow.bind(this));
+        this._btnOpen.addEventListener("click", this.toggleWindow.bind(this)); // Remember that the this keyword in an event listener points specifically to the item it is attached to. so I used bind here to be more specific about the this keyword I mean.
+    }
+    _addHandlerHideWindow() {
+        this._btnClose.addEventListener("click", this.toggleWindow.bind(this));
+        this._overlay.addEventListener("click", this.toggleWindow.bind(this));
     }
     _generateMarkup() {}
 }
