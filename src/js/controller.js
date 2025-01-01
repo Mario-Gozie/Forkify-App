@@ -4,6 +4,7 @@ import searchView from "./views/SearchView.js";
 import resultsView from "./views/resultsView.js";
 import paginationView from "./views/paginationView.js";
 import bookmarksView from "./views/bookmarksView.js";
+import addRecipeView from "./views/addRecipeView.js";
 
 import "core-js/modules/es.symbol.js"; // for polyfilling everything else.
 import "regenerator-runtime/runtime"; // for polyfilling async Await

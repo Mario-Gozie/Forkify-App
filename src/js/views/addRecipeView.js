@@ -15,14 +15,16 @@ class AddRecipeView extends view {
     this._addHandlerShowWindow();
   }
 
+  toggleWindow() {
+    this._overlay.classList.toggle("hidden");
+    this._window.classList.toggle("hidden");
+  }
+
   _addHandlerShowWindow() {
-    this._btnOpen.addEventListener("click", function () {
-      this._overlay.classList.toggle("hidden");
-      this._window.classList.toggle("hidden");
-    });
+    this._btnOpen.addEventListener("click", this.toggleWindow.bind(this));
   }
 
   _generateMarkup() {}
 }
 
-export default new AddRecipeView();
+export default new AddRecipeView(); // This Object need to be imported to the controller so that which is the main script will never execute this file. and the object will never be created.
