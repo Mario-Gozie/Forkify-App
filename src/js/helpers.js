@@ -31,3 +31,25 @@ export const getJSON = async function (url) {
     throw err; // I am throwing this error because I want it to be handled in the model.js and not in helpers.js This is more like propergating an error from one async function to another.
   }
 };
+
+export const sendJSON = async function (url, uploadData) {
+  try {
+    const fetchPro = fetch(url, {
+      method: "POST", //we are saying we want to post
+      headers: {
+        "Content-Type": "application/json", //we are saying the file type will be json
+      },
+      body: JSON.stringify(uploadData),
+    });
+    const res = await Promise.race([fetchPro, timeout(TIMEOUT_SEC)]);
+
+    const data = await res.json();
+
+    // console.log(res, data);
+
+    if (!res.ok) throw Error(`${data.message} (${res.status})`);
+    return data;
+  } catch (err) {
+    throw err; // I am throwing this error because I want it to be handled in the model.js and not in helpers.js This is more like propergating an error from one async function to another.
+  }
+};

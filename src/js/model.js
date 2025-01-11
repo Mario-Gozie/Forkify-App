@@ -1,7 +1,7 @@
 // This contains everything that has to do with the business aspect of the webpage.
 import { async } from "regenerator-runtime";
 import { API_URL, REST_PER_PAGE } from "./config";
-import { getJSON } from "./helpers";
+import { getJSON, sendJSON } from "./helpers";
 
 export const state = {
   //The state contains all the data we need for our application.
