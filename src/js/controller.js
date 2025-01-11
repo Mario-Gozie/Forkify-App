@@ -1,11 +1,11 @@
 import * as model from "./model.js";
+import { MODAL_CLOSE_SEC } from "./config.js";
 import recipeView from "./views/recipeView.js";
 import searchView from "./views/SearchView.js";
 import resultsView from "./views/resultsView.js";
 import paginationView from "./views/paginationView.js";
 import bookmarksView from "./views/bookmarksView.js";
 import addRecipeView from "./views/addRecipeView.js";
-// import view from "./views/view.js";
 
 import "core-js/modules/es.symbol.js"; // for polyfilling everything else.
 import "regenerator-runtime/runtime"; // for polyfilling async Await
@@ -118,8 +118,29 @@ const controlBookmarks = function () {
 
 const controlAddRecipe = async function (newRecipe) {
   try {
+    // showing loading spinner
+    addRecipeView.renderSpinner();
     // Upload the new recipe data.
     await model.uploadRecipe(newRecipe);
+    console.log(model.state.recipe);
+
+    // Render recipe
+    recipeView.render(model.state.recipe);
+
+    // success
+    addRecipeView.renderMessage();
+
+    // Render bookmark view
+    bookmarksView.render(model.state.bookmarks);
+
+    // Change ID in the URL. // This is done with the history API which can change an address without reloading the page. it takes 3 arguement. the first one is the state, the second one is the title which is not also relevant we can use an empty string, then the third one is the address which is very important
+
+    window.history.pushState(null, "", `#${model.state.recipe.id}`);
+
+    // Close form window
+    setTimeout(function () {
+      addRecipeView.toggleWindow();
+    }, MODAL_CLOSE_SEC * 1000);
   } catch (err) {
     console.error("💥💥💥", err);
     addRecipeView.renderError(err);
