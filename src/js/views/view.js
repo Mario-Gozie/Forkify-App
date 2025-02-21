@@ -3,6 +3,16 @@ import icons from "../../img/icons.svg";
 export default class view {
   _data;
 
+  /**
+   * Render the recieved object to the DOM
+   * @param {Object | Object[]} data The data to be rendered (e.g recipe)
+   * @param {boolean} [render= true] If false, create markup string instead of rendering to the DOM
+   * @returns{undefined | string} A markup string is retured if render = false
+   * @this {Object} View instance
+   * @author Jonas Schmedtmann
+   * @todo Finnish Implementation
+   */
+
   render(data, render = true) {
     if (!data || (Array.isArray(data) && data.length === 0))
       return this.renderError(); //if there is no data or the data is an array but empty, give an error message.

@@ -2,15 +2,17 @@
   "name": "forkify",
   "version": "1.0.0",
   "description": "Recipe application",
+  "default": "index.html",
   "scripts": {
     "start": "parcel index.html",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html --dist-dir ./dist"
   },
   "author": "Chigozirim Oguedoihu",
   "license": "ISC",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.13.3",
-    "parcel": "^2.13.3"
+    "parcel": "^2.13.3",
+    "svgo": "^3.3.2"
   },
   "dependencies": {
     "core-js": "^3.39.0",
