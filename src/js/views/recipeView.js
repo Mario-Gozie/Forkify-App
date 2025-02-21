@@ -3,7 +3,7 @@
 
 import view from "./view"; // This is a moudle for parent class for rendering results
 import icons from "../../img/icons.svg";
-import { Fraction } from "fraction.js";
+import { Fraction } from "fractional";
 // console.log(Fraction);
 
 class RecipeView extends view {
